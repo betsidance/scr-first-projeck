@@ -1,0 +1,13 @@
+body{
+    display: flex;
+    flex-direction: column;
+}
+
+.infoUser{
+    display: flex;
+        flex-direction: column;
+        gap: 20px;
+        height: 100px;
+        width: 250px;
+   
+}
