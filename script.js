@@ -1,52 +1,85 @@
 const nameUser = document.querySelector(".nameUser");
 const lastnameUser = document.querySelector(".lastnameUser");
-const bethdayUser = document.querySelector(".bethdayUser");
+const birthdayUser = document.querySelector(".birthdayUser");
 const sentIbJs = document.querySelector(".sentIbJs");
-const ullNew = document.querySelector(".newUl");
+const userList = document.querySelector(".newUl");
+const hwoUserDelite = document.querySelector(".deliteUser");
+const butDEeleteUser = document.querySelector(".butDeliteUser");   
+
 
 let users = []
 
- users = JSON.parse(localStorage.getItem("users")) || [];
+users = JSON.parse(localStorage.getItem("users")) || [];
 
-sentIbJs.addEventListener('click', function () {
-
-    const user = {
-      name: nameUser.value,
-      lastName: lastnameUser.value,
-      besday: bethdayUser.value,
-    };
-    users.push(user)
-    localStorage.setItem("users", JSON.stringify(users));
-    nameUser.value = ""
-    lastnameUser.value = ''
-    bethdayUser.value = ""
-console.log(ullNew);
-    
-})
+sentIbJs.addEventListener('click', addUser)
+ 
+function addUser() {
+     if(!proverkaInput()) return
+      const user = {
+            name: nameUser.value,
+            lastName: lastnameUser.value,
+            birthday: birthdayUser.value
+      }
+     users.push(user)
+     localStorage.setItem("users", JSON.stringify(users))
+     showUser();
+     cleanInput()
+     }
 
 function showUser() {
-    ullNew.innerHTML = ""
+    userList.innerHTML = "";
     users.forEach(user => {
         const li = document.createElement("li");
-        li =  ` Имя: ${user.name} Фамилия: ${user.lastName} </li>
-      День рождения: ${user.besday}`
+        li.innerHTML = `  <div> Имя: ${user.name}</div> 
+        <div>   Фамилия: ${user.lastName}</div> 
+      <div>  День рождения: ${user.birthday}</div> `;
+        userList.appendChild(li);
     })
-    ullNew.appendChild(li)
 }
 
+function cleanInput() {
+  nameUser.value = "";
+  lastnameUser.value = "";
+  birthdayUser.value = "";
+}
 
-
-
-
-
-nameUser.addEventListener("keydown", function (event) {
-    if (event.key === "Enter") {
-        lastnameUser.focus()
+function proverkaInput() {
+    if (!nameUser.value ||
+        !lastnameUser.value ||
+        !birthdayUser.value) {
+        alert("Заполони поля")
+        return false
     }
-})
+    return true
+}
 
-lastnameUser.addEventListener("keydown", function (event) {
-  if (event.key === "Enter") {
-    bethdayUser.focus();
-  }
-});
+function perenosEnter(pole , next) {
+    pole.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            next.focus()
+        }
+
+    })
+}
+perenosEnter(nameUser, lastnameUser)
+perenosEnter(lastnameUser, birthdayUser)
+console.log(users);
+
+function deleteUser(nameUserHoDelite) {
+    const userDeliteIndexs = users.findIndex((d) => d.name.trim() === nameUserHoDelite.trim())
+    console.log(userDeliteIndexs);
+    if (userDeliteIndexs === -1) {
+        console.log("Пользователь не найден");
+        return
+    }
+    users.splice(userDeliteIndexs, 1)
+    localStorage.setItem("users", JSON.stringify(users))
+    hwoUserDelite.value = ""
+    showUser()
+    console.log("Пользователь удален");
+  
+}
+butDEeleteUser.addEventListener('click', () => { deleteUser(hwoUserDelite.value) })
+
+
+showUser()
