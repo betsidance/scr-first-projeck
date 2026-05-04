@@ -106,6 +106,30 @@ function hwoUserDeliteFilter(name, lastName) {
 
 buttonHwoDeliteFilter.addEventListener('click', ()=> {hwoUserDeliteFilter(nameHwoDelite.value, lastNameHwoDelite.value)})
 
+function showUserWhisDiv() {
+    newDiv.innerHTML = ""
+    users.forEach(user => {
+        const div = document.createElement("div")
+        div.classList.add("showUserByDiv")
+        const li = document.createElement("li")
+        li.innerHTML = ` <div> Имя ${user.name} </div> 
+        <div> Фамилия ${user.lastName} </div> 
+        <div> День Рождения${user.birthday} </div> `;
+        const button = document.createElement("button")
+        button.textContent = "Удалить"
+        div.appendChild(li)
+        div.appendChild(button)
+        newDiv.appendChild(div)
 
+
+    });
+
+}
+
+
+
+
+
+showUserWhisDiv()
 
 showUser()
