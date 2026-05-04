@@ -5,11 +5,12 @@ const sentIbJs = document.querySelector(".sentIbJs");
 const userList = document.querySelector(".newUl");
 const hwoUserDelite = document.querySelector(".deliteUser");
 const butDEeleteUser = document.querySelector(".butDeliteUser");   
+const nameHwoDelite = document.querySelector(".deliteUserName");
+const lastNameHwoDelite = document.querySelector(".deliteUserLastName");
+const buttonHwoDeliteFilter = document.querySelector(".butDeliteUserFilter");
 
 
-let users = []
-
-users = JSON.parse(localStorage.getItem("users")) || [];
+const users = JSON.parse(localStorage.getItem("users")) || [];
 
 sentIbJs.addEventListener('click', addUser)
  
@@ -53,16 +54,18 @@ function proverkaInput() {
     return true
 }
 
-function perenosEnter(pole , next) {
-    pole.addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            next.focus()
-        }
-
-    })
+function perenosCherezEnter(massiv) {
+    for (let i = 0; i < massiv.length-1; i++){
+        let newFocys = massiv[i+1]
+        
+        massiv[i].addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                newFocys.focus()
+            }
+        })
+    }
 }
-perenosEnter(nameUser, lastnameUser)
-perenosEnter(lastnameUser, birthdayUser)
+perenosCherezEnter([nameUser, lastnameUser, birthdayUser])
 console.log(users);
 
 function deleteUser(nameUserHoDelite) {
@@ -80,6 +83,29 @@ function deleteUser(nameUserHoDelite) {
   
 }
 butDEeleteUser.addEventListener('click', () => { deleteUser(hwoUserDelite.value) })
+
+
+function hwoUserDeliteFilter(name, lastName) {
+    const userDelite = users.filter(user=> user.name .trim()=== name.trim() && user.lastName.trim()===lastName.trim())
+    console.log(userDelite);
+    
+    if (userDelite.length === 0  ) {
+        console.log("Пользователь не найден");
+        return
+    }
+    const indexsUser = users.indexOf(userDelite[0])
+    users.splice(indexsUser,1)
+    localStorage.setItem('users', JSON.stringify(users))
+    nameHwoDelite.value = ""
+    lastNameHwoDelite.value= ""
+
+    showUser()
+     console.log("Пользователь удален");
+
+}
+
+buttonHwoDeliteFilter.addEventListener('click', ()=> {hwoUserDeliteFilter(nameHwoDelite.value, lastNameHwoDelite.value)})
+
 
 
 showUser()
