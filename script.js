@@ -106,6 +106,7 @@ function hwoUserDeliteFilter(name, lastName) {
 
 buttonHwoDeliteFilter.addEventListener('click', ()=> {hwoUserDeliteFilter(nameHwoDelite.value, lastNameHwoDelite.value)})
 
+
 function showUserWhisDiv() {
     newDiv.innerHTML = ""
     users.forEach(user => {
@@ -117,16 +118,23 @@ function showUserWhisDiv() {
         <div> День Рождения${user.birthday} </div> `;
         const button = document.createElement("button")
         button.textContent = "Удалить"
+        button.addEventListener('click',() => {
+            const userHwoDelite = users.filter(u => u.name !== user.name || u.lastName !== user.lastName)
+            const indexs = users.indexOf(userHwoDelite)
+            users.splice(indexs,1)
+
+            localStorage.setItem("users", JSON.stringify(users))
+            showUserWhisDiv()
+
+
+        })
         div.appendChild(li)
         div.appendChild(button)
         newDiv.appendChild(div)
 
 
     });
-
 }
-
-
 
 
 
