@@ -107,6 +107,7 @@ function hwoUserDeliteFilter(name, lastName) {
 buttonHwoDeliteFilter.addEventListener('click', ()=> {hwoUserDeliteFilter(nameHwoDelite.value, lastNameHwoDelite.value)})
 
 
+
 function showUserWhisDiv() {
     newDiv.innerHTML = ""
     users.forEach(user => {
@@ -119,23 +120,49 @@ function showUserWhisDiv() {
         const button = document.createElement("button")
         button.textContent = "Удалить"
         button.addEventListener('click',() => {
-            const userHwoDelite = users.filter(u => u.name !== user.name || u.lastName !== user.lastName)
-            const indexs = users.indexOf(userHwoDelite)
+            
+            const indexs = users.indexOf(user)
             users.splice(indexs,1)
 
             localStorage.setItem("users", JSON.stringify(users))
             showUserWhisDiv()
-
-
+          
+        })
+          const buttonChange = document.createElement("button");
+        buttonChange.textContent = "Изменить";
+        buttonChange.addEventListener('click', () => {
+           const newDivChange = document.createElement("div")
+            const newName = document.createElement("input")
+            const newLastName = document.createElement("input");
+            const newBihtday = document.createElement("input");
+            const newButtomChenge = document.createElement("button")
+            div.appendChild(newDivChange);
+            newDivChange.appendChild(newName)
+            newDivChange.appendChild(newLastName);
+            newDivChange.appendChild(newBihtday);
+            newDivChange.appendChild(newButtomChenge);
+            newButtomChenge.textContent = "Изменить"
+            newButtomChenge.addEventListener('click', () => {
+                
+                user.name = newName.value
+                user.lastName = newLastName.value
+                user.birthday = newBihtday.value;
+                showUser();
+                showUserWhisDiv()
+                
+                
+            })
         })
         div.appendChild(li)
         div.appendChild(button)
+        div.appendChild(buttonChange)
+      
         newDiv.appendChild(div)
+
 
 
     });
 }
-
 
 
 showUserWhisDiv()
