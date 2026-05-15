@@ -138,6 +138,7 @@ function showUserWhisDiv() {
             newName.value = user.name
             newLastName.value = user.lastName
             newBihtday.value = user.birthday
+            perenosCherezEnter([newName, newLastName, newBihtday])
             div.appendChild(newDivChange);
             newDivChange.appendChild(newName)
             newDivChange.appendChild(newLastName);
