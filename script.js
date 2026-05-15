@@ -106,8 +106,6 @@ function hwoUserDeliteFilter(name, lastName) {
 
 buttonHwoDeliteFilter.addEventListener('click', ()=> {hwoUserDeliteFilter(nameHwoDelite.value, lastNameHwoDelite.value)})
 
-
-
 function showUserWhisDiv() {
     newDiv.innerHTML = ""
     users.forEach(user => {
@@ -135,7 +133,11 @@ function showUserWhisDiv() {
             const newName = document.createElement("input")
             const newLastName = document.createElement("input");
             const newBihtday = document.createElement("input");
+            newBihtday.type = "date"
             const newButtomChenge = document.createElement("button")
+            newName.value = user.name
+            newLastName.value = user.lastName
+            newBihtday.value = user.birthday
             div.appendChild(newDivChange);
             newDivChange.appendChild(newName)
             newDivChange.appendChild(newLastName);
@@ -147,6 +149,7 @@ function showUserWhisDiv() {
                 user.name = newName.value
                 user.lastName = newLastName.value
                 user.birthday = newBihtday.value;
+                localStorage.setItem("users" , JSON.stringify(users))
                 showUser();
                 showUserWhisDiv()
                 
@@ -162,8 +165,6 @@ function showUserWhisDiv() {
 
 
     });
-}
-
 
 showUserWhisDiv()
 
