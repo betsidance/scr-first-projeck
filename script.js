@@ -8,9 +8,11 @@ const butDEeleteUser = document.querySelector(".butDeliteUser");
 const nameHwoDelite = document.querySelector(".deliteUserName");
 const lastNameHwoDelite = document.querySelector(".deliteUserLastName");
 const buttonHwoDeliteFilter = document.querySelector(".butDeliteUserFilter");
+const newDiv = document.querySelector(".newDiv")
 
 
 const users = JSON.parse(localStorage.getItem("users")) || [];
+
 
 sentIbJs.addEventListener('click', addUser)
  
@@ -23,7 +25,8 @@ function addUser() {
       }
      users.push(user)
      localStorage.setItem("users", JSON.stringify(users))
-     showUser();
+    
+    showUserWhisDiv()
      cleanInput()
      }
 
@@ -53,6 +56,18 @@ function proverkaInput() {
     }
     return true
 }
+/*
+function perenosEnter(pole , next) {
+    pole.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            next.focus()
+        }
+
+    })
+}
+perenosEnter(nameUser, lastnameUser)
+perenosEnter(lastnameUser, birthdayUser)
+*/
 
 function perenosCherezEnter(massiv) {
     for (let i = 0; i < massiv.length-1; i++){
@@ -66,9 +81,10 @@ function perenosCherezEnter(massiv) {
     }
 }
 perenosCherezEnter([nameUser, lastnameUser, birthdayUser])
-console.log(users);
 
-function deleteUser(nameUserHoDelite) {
+
+
+function deleteUser(nameUserHoDelite) { //
     const userDeliteIndexs = users.findIndex((d) => d.name.trim() === nameUserHoDelite.trim())
     console.log(userDeliteIndexs);
     if (userDeliteIndexs === -1) {
@@ -78,12 +94,12 @@ function deleteUser(nameUserHoDelite) {
     users.splice(userDeliteIndexs, 1)
     localStorage.setItem("users", JSON.stringify(users))
     hwoUserDelite.value = ""
-    showUser()
+    
+    showUserWhisDiv()
     console.log("Пользователь удален");
   
 }
 butDEeleteUser.addEventListener('click', () => { deleteUser(hwoUserDelite.value) })
-
 
 function hwoUserDeliteFilter(name, lastName) {
     const userDelite = users.filter(user=> user.name .trim()=== name.trim() && user.lastName.trim()===lastName.trim())
@@ -99,12 +115,15 @@ function hwoUserDeliteFilter(name, lastName) {
     nameHwoDelite.value = ""
     lastNameHwoDelite.value= ""
 
-    showUser()
+   
+    showUserWhisDiv()
      console.log("Пользователь удален");
 
 }
 
-buttonHwoDeliteFilter.addEventListener('click', ()=> {hwoUserDeliteFilter(nameHwoDelite.value, lastNameHwoDelite.value)})
+buttonHwoDeliteFilter.addEventListener('click', () => { hwoUserDeliteFilter(nameHwoDelite.value, lastNameHwoDelite.value) })
+
+
 
 function showUserWhisDiv() {
     newDiv.innerHTML = ""
@@ -151,7 +170,7 @@ function showUserWhisDiv() {
                 user.lastName = newLastName.value
                 user.birthday = newBihtday.value;
                 localStorage.setItem("users" , JSON.stringify(users))
-                showUser();
+               
                 showUserWhisDiv()
                 
                 
@@ -166,7 +185,16 @@ function showUserWhisDiv() {
 
 
     });
+}
+
+
+
+function deliteUserInDiv() {
+    
+}
+
+
+
+
 
 showUserWhisDiv()
-
-showUser()
