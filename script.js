@@ -9,6 +9,13 @@ const nameHwoDelite = document.querySelector(".deliteUserName");
 const lastNameHwoDelite = document.querySelector(".deliteUserLastName");
 const buttonHwoDeliteFilter = document.querySelector(".butDeliteUserFilter");
 const newDiv = document.querySelector(".newDiv")
+const modal = document.querySelector(".model");
+const modalName = document.querySelector(".modelName ");
+const modalLastName = document.querySelector(".modelLastName");
+const modalBirthday = document.querySelector(".modelBirthday ");
+const modalButton = document.querySelector(".modelButton");
+const modelClouse = document.querySelector(".modelClouse");
+
 
 
 const users = JSON.parse(localStorage.getItem("users")) || [];
@@ -136,46 +143,22 @@ function showUserWhisDiv() {
         <div> День Рождения${user.birthday} </div> `;
         const button = document.createElement("button")
         button.textContent = "Удалить"
-        button.addEventListener('click',() => {
+        button.addEventListener('click', () => {
             
             const indexs = users.indexOf(user)
-            users.splice(indexs,1)
+            users.splice(indexs, 1)
 
             localStorage.setItem("users", JSON.stringify(users))
             showUserWhisDiv()
           
         })
-          const buttonChange = document.createElement("button");
+        const buttonChange = document.createElement("button");
         buttonChange.textContent = "Изменить";
         buttonChange.addEventListener('click', () => {
-           const newDivChange = document.createElement("div")
-            const newName = document.createElement("input")
-            const newLastName = document.createElement("input");
-            const newBihtday = document.createElement("input");
-            newBihtday.type = "date"
-            const newButtomChenge = document.createElement("button")
-            newName.value = user.name
-            newLastName.value = user.lastName
-            newBihtday.value = user.birthday
-            perenosCherezEnter([newName, newLastName, newBihtday])
-            div.appendChild(newDivChange);
-            newDivChange.appendChild(newName)
-            newDivChange.appendChild(newLastName);
-            newDivChange.appendChild(newBihtday);
-            newDivChange.appendChild(newButtomChenge);
-            newButtomChenge.textContent = "Изменить"
-            newButtomChenge.addEventListener('click', () => {
-                
-                user.name = newName.value
-                user.lastName = newLastName.value
-                user.birthday = newBihtday.value;
-                localStorage.setItem("users" , JSON.stringify(users))
-               
-                showUserWhisDiv()
-                
-                
-            })
+            modalWindou(user)
+            showUserWhisDiv()
         })
+        
         div.appendChild(li)
         div.appendChild(button)
         div.appendChild(buttonChange)
@@ -184,17 +167,32 @@ function showUserWhisDiv() {
 
 
 
-    });
+
+    })
+
 }
 
-
-
-function deliteUserInDiv() {
+function modalWindou(user) {
+    modal.classList.remove("hidden");
+     modalName.value = user.name;
+     modalLastName.value = user.lastName;
+     modalBirthday.value = user.birthday;
+     
+    modalButton.onclick = () => {
+           user.name = modalName.value;
+           user.lastName = modalLastName.value;
+           user.birthday = modalBirthday.value;
+        localStorage.setItem("users", JSON.stringify(users));
+        modal.classList.add("hidden")
+        showUserWhisDiv()
+    }
+    modelClouse.addEventListener('click', () => {
+        modal.classList.add('hidden')
+    })
     
 }
 
-
-
-
+function deliteUserInDiv() {
+   }
 
 showUserWhisDiv()
